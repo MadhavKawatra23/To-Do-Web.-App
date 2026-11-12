@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" class="icon logo-icon"><path d="M5 12l5 5L20 7"/></svg>
+        <span class="logo-text">TaskFlow</span>
+      </div>
+      <button class="icon-btn" id="collapse-btn" aria-label="Collapse sidebar">
+        <svg viewBox="0 0 24 24" class="icon"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+    </div>
+
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" class="icon"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <label for="search-input" class="sr-only">Search tasks</label>
+      <input type="search" id="search-input" placeholder="Search tasks">
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-page="home">
+        <svg viewBox="0 0 24 24" class="icon"><path d="M4 11l8-7 8 7v9H4z"/></svg><span>Home</span>
+      </button>
+      <button class="nav-item" data-page="tasks">
+        <svg viewBox="0 0 24 24" class="icon"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/></svg><span>Tasks</span>
+      </button>
+      <button class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" class="icon"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg><span>Settings</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="promo-card">
+        <h3>Boost Your Productivity</h3>
+        <p>Finish one task at a time.</p>
+        <button class="btn glow" id="promo-btn">Stay Productive</button>
+      </div>
+      <button class="account" id="account-btn" aria-haspopup="dialog">
+        <span class="avatar" id="sidebar-avatar"></span>
+        <span class="account-text">
+          <strong id="sidebar-name">Your Name</strong>
+          <small id="sidebar-email">you@gmail.com</small>
+        </span>
+        <svg viewBox="0 0 24 24" class="icon small"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menu-btn" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" class="icon"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="heading">
+        <h1 id="page-title">Home</h1>
+        <p id="page-subtitle">Your productivity overview.</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="theme-btn" aria-label="Switch to light theme">
+          <svg viewBox="0 0 24 24" class="icon" id="theme-icon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+        </button>
+        <button class="btn glow" id="top-add-btn">+ Add Task</button>
+      </div>
+    </header>
+
+    <main class="page-area" id="page-area">
+
+      <!-- HOME -->
+      <section class="page" id="page-home">
+        <h2 class="welcome">Welcome back, <span id="welcome-name">friend</span></h2>
+        <div class="stats">
+          <div class="stat-card"><span>Total Tasks</span><strong class="stat-total">0</strong></div>
+          <div class="stat-card"><span>Pending</span><strong class="stat-pending">0</strong></div>
+          <div class="stat-card"><span>Completed</span><strong class="stat-completed">0</strong></div>
+          <div class="stat-card"><span>Completion Rate</span><strong class="stat-rate">0%</strong></div>
+        </div>
+        <div class="panel">
+          <div class="progress" role="progressbar" aria-label="Completion rate"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Up next</h3>
+            <button class="btn" id="go-tasks-btn">Go to Tasks</button>
+          </div>
+          <ul class="task-list" id="home-list"></ul>
+        </div>
+      </section>
+
+      <!-- TASKS -->
+      <section class="page" id="page-tasks" hidden>
+        <div class="stats">
+          <div class="stat-card"><span>Total Tasks</span><strong class="stat-total">0</strong></div>
+          <div class="stat-card"><span>Pending</span><strong class="stat-pending">0</strong></div>
+          <div class="stat-card"><span>Completed</span><strong class="stat-completed">0</strong></div>
+          <div class="stat-card"><span>Completion Rate</span><strong class="stat-rate">0%</strong></div>
+        </div>
+        <div class="panel add-row">
+          <label for="task-input" class="sr-only">New task title</label>
+          <input type="text" id="task-input" placeholder="What needs doing?" maxlength="120">
+          <button class="btn glow" id="add-btn">Add Task</button>
+        </div>
+        <p class="message" id="message" role="status"></p>
+        <div class="filters" role="group" aria-label="Filter tasks">
+          <button class="chip active" data-filter="all">All Tasks</button>
+          <button class="chip" data-filter="pending">Pending</button>
+          <button class="chip" data-filter="completed">Completed</button>
+        </div>
+        <div class="panel" id="pending-panel">
+          <h3>Pending Tasks</h3>
+          <ul class="task-list" id="pending-list"></ul>
+        </div>
+        <div class="panel" id="completed-panel">
+          <h3>Completed Tasks</h3>
+          <ul class="task-list" id="completed-list"></ul>
+        </div>
+      </section>
+
+     
+      <section class="page" id="page-settings" hidden>
+        <div class="panel setting-row">
+          <div><h3>Theme</h3><p>Switch between dark and light.</p></div>
+          <button class="btn" id="settings-theme-btn">Toggle theme</button>
+        </div>
+        <div class="panel setting-row">
+          <div><h3>Profile</h3><p>Change your name, email and photo.</p></div>
+          <button class="btn" id="settings-profile-btn">Edit profile</button>
+        </div>
+        <div class="panel setting-row">
+          <div><h3>Clear all tasks</h3><p>Removes tasks only. Profile and theme stay.</p></div>
+          <button class="btn danger" id="clear-btn">Clear all tasks</button>
+        </div>
+        <div class="panel">
+          <h3>About TaskFlow</h3>
+          <p>A learning project built with HTML, CSS and JavaScript. Data is saved in this browser only. The profile is a local demo, not a real login.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay" id="overlay" hidden></div>
+
+
+  <div class="modal" id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-title" hidden>
+    <h3 id="profile-title">Edit profile</h3>
+    <div class="avatar large" id="modal-avatar"></div>
+    <input type="file" id="photo-input" accept="image/png, image/jpeg, image/webp" hidden>
+    <button class="btn" id="upload-btn">Upload Photo</button>
+    <label for="name-input">Name</label>
+    <input type="text" id="name-input" maxlength="40">
+    <label for="email-input">Gmail</label>
+    <input type="email" id="email-input" maxlength="60">
+    <p class="message" id="profile-message" role="status"></p>
+    <div class="modal-actions">
+      <button class="btn" id="cancel-profile-btn">Cancel</button>
+      <button class="btn glow" id="save-profile-btn">Save Profile</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
